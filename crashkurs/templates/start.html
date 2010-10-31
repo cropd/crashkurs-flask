@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Test</title>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				
+				var dice_images = [
+							{"path": "/static/img/one.jpg"},
+							{"path": "/static/img/two.jpg"},
+							{"path": "/static/img/three.jpg"},
+							{"path": "/static/img/four.jpg"},
+							{"path": "/static/img/five.jpg"},
+							{"path": "/static/img/six.jpg"}
+				];
+				
+				$("#roll-dice").click(function() {
+					$.getJSON('/roll-dice', function(data) {
+						var values = data.dices;
+						var firstDice = values[0];
+						var secondDice = values[1];
+						
+						$('#images').append("<li><img src='"+ dice_images[firstDice-1].path +"' alt='"+firstDice+"'/><img src='"+ dice_images[secondDice-1].path +"' alt='"+secondDice+"'/></li>"
+						);					
+					});	      				
+				});
+			});
+ 			
+    		
+		</script>
+		<style type="text/css">
+			body{background: aqua;}
+			img{background: fuchsia; height: 30px; width: 30px;}
+			#images {height: 30px; width: 60px;clear: left; float: left; list-style-type: none;}
+			#roll-dice{float: left}
+		</style>
+	</head>
+	<body>
+		<a id="roll-dice" href="#">Roll Dice</a>
+		<ul id="images">
+		</ul>
+		
+	</body>
+</html>
