@@ -17,17 +17,17 @@
 				];
 				
 				$(".roll-dice").click(function() {
-					var number = this.id;
+					var path = $(this).attr("data-ajax");
 					var images = '';
-					$.getJSON('/roll-dice/'+number, function(data) {
+					$.getJSON(path, function(data) {
 						
 						var values = data.dices;
+												
+						$.each(values, function(i, value) {
+    						images += "<img src='"+ dice_images[value-1].path +"' alt='"+value+"' width='30px' height='30px'/>"
+  						});
 						
-						for (var i=0; i<number; i++) {
-							images += "<img src='"+ dice_images[values[i]-1].path +"' alt='"+values[i]+"' width='30px' height='30px'/>"
-						}
-						
-						$('#images').append("<li>"+images+"</li>");			
+						$('#images').prepend("<li>"+images+"</li>").hide().slideDown("slow");
 					});	
 				});
 			});
@@ -36,16 +36,16 @@
 		</script>
 		<style type="text/css">
 			body{}
-			#images {height: 30px; list-style-type: none;}
+			#images {height: 30px; list-style-type: none; padding: 0px;}
 			#roll-dice{float: left}
 		</style>
 	</head>
 	<body>
-		<a id="1" class="roll-dice" href="#">Roll Dice</a> | 
-		<a id="2" class="roll-dice" href="#">Roll Dice</a> | 
-		<a id="3" class="roll-dice" href="#">Roll Dice</a> | 
-		<a id="4" class="roll-dice" href="#">Roll Dice</a> | 
-		<a id="5" class="roll-dice" href="#">Roll Dice</a>
+		<a class="roll-dice" href="#" data-ajax="/roll-dice/1">Roll one Dice</a> | 
+		<a class="roll-dice" href="#" data-ajax="/roll-dice/2">Roll two Dices</a> | 
+		<a class="roll-dice" href="#" data-ajax="/roll-dice/3">Roll three Dices</a> | 
+		<a class="roll-dice" href="#" data-ajax="/roll-dice/4">Roll four Dices</a> | 
+		<a class="roll-dice" href="#" data-ajax="/roll-dice/5">Roll five Dices</a>
 		<ul id="images">
 		</ul>
 		
