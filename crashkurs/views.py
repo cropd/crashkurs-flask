@@ -6,7 +6,12 @@ from random import randint
 def start():
     return render_template('start.html')
 
-@app.route('/roll-dice', methods=['GET'])
-def roll_dice():
-	dices ={"dices": [randint(1, 6),randint(1, 6)]}
+@app.route('/roll-dice/<number>', methods=['GET'])
+def roll_dice(number):
+	roll = [randint(1, 6)]
+	i = 1
+	while i < int(number):
+		roll.append(randint(1, 6))
+		i+=1	
+	dices ={"dices": roll}
 	return json.dumps(dices)
