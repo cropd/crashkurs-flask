@@ -1,0 +1,9 @@
+
+/* Main stylesheet */
+
+html {background-color: #333;}
+body {background-color: #fff; margin: 2em auto; width: 960px; padding: 1em; border: 8px solid #ccc;}
+
+/* Your customizations here */
+#images {height: 30px; list-style-type: none; padding: 0px;}
+#roll-dice{float: left}

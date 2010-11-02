@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block head_script %}
+  {{ super() }}
+  <script>
+  	$(document).ready(function() {
+				
+		var dice_images = [
+				{"path": "/static/img/one.jpg"},
+				{"path": "/static/img/two.jpg"},
+				{"path": "/static/img/three.jpg"},
+				{"path": "/static/img/four.jpg"},
+				{"path": "/static/img/five.jpg"},
+				{"path": "/static/img/six.jpg"}
+		];
+	
+		$(".roll-dice").click(function() {
+			var path = $(this).attr("data-ajax");
+			alert(path)
+			var images = '';
+			$.getJSON(path, function(data) {
+				
+				var values = data.dice;
+										
+				$.each(values, function(i, value) {
+					images += "<img src='"+ dice_images[value-1].path +"' alt='"+value+"' width='30px' height='30px'/>"
+					});
+				alert(images);
+				$('#images').prepend("<li>"+images+"</li>").find("li:first").hide().fadeIn("slow");
+			});	
+		});
+	});
+
+  </script>
+{% endblock %}
+{% block content %}
+<p>
+	<a class="roll-dice" href="#" data-ajax="{{ url_for('roll_dice', room=room, number = '1') }}">Roll one Die</a> | 
+	<a class="roll-dice" href="#" data-ajax="{{ url_for('roll_dice', room=room, number = '2') }}">Roll two Dice</a> | 
+	<a class="roll-dice" href="#" data-ajax="{{ url_for('roll_dice', room=room, number = '3') }}">Roll three Dice</a> | 
+	<a class="roll-dice" href="#" data-ajax="{{ url_for('roll_dice', room=room, number = '4') }}">Roll four Dice</a> | 
+	<a class="roll-dice" href="#" data-ajax="{{ url_for('roll_dice', room=room, number = '5') }}">Roll five Dice</a>
+</p>
+<h1 id="">Last Casts</h1>
+<ul id="images">
+    {% for diceroll in dicerolls %}
+    	{% if diceroll.room == room %}
+		<li>
+			<p>{{ diceroll.dice_roll }}</p>
+		</li>
+		{% endif %}
+    {% endfor %}
+</ul>
+{% endblock %}

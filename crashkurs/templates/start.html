@@ -21,13 +21,13 @@
 					var images = '';
 					$.getJSON(path, function(data) {
 						
-						var values = data.dices;
+						var values = data.dice;
 												
 						$.each(values, function(i, value) {
     						images += "<img src='"+ dice_images[value-1].path +"' alt='"+value+"' width='30px' height='30px'/>"
   						});
 						
-						$('#images').prepend("<li>"+images+"</li>").hide().slideDown("slow");
+						$('#images').prepend("<li>"+images+"</li>").find("li:first").hide().fadeIn("slow");
 					});	
 				});
 			});
@@ -42,10 +42,10 @@
 	</head>
 	<body>
 		<a class="roll-dice" href="#" data-ajax="/roll-dice/1">Roll one Dice</a> | 
-		<a class="roll-dice" href="#" data-ajax="/roll-dice/2">Roll two Dices</a> | 
-		<a class="roll-dice" href="#" data-ajax="/roll-dice/3">Roll three Dices</a> | 
-		<a class="roll-dice" href="#" data-ajax="/roll-dice/4">Roll four Dices</a> | 
-		<a class="roll-dice" href="#" data-ajax="/roll-dice/5">Roll five Dices</a>
+		<a class="roll-dice" href="#" data-ajax="/roll-dice/2">Roll two Dice</a> | 
+		<a class="roll-dice" href="#" data-ajax="/roll-dice/3">Roll three Dice</a> | 
+		<a class="roll-dice" href="#" data-ajax="/roll-dice/4">Roll four Dice</a> | 
+		<a class="roll-dice" href="#" data-ajax="/roll-dice/5">Roll five Dice</a>
 		<ul id="images">
 		</ul>
 		
