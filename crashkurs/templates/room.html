@@ -3,9 +3,7 @@
 {% block head_script %}
   {{ super() }}
   <script>
-  	$(document).ready(function() {
-				
-		var dice_images = [
+  	var dice_images = [
 				{"path": "/static/img/one.jpg"},
 				{"path": "/static/img/two.jpg"},
 				{"path": "/static/img/three.jpg"},
@@ -13,21 +11,25 @@
 				{"path": "/static/img/five.jpg"},
 				{"path": "/static/img/six.jpg"}
 		];
-	
+				
+		function showPix(data) {
+			var images = '';
+			var values = data.dice;
+
+			$.each(values, function(i, value) {
+				images += "<img src='"+ dice_images[value-1].path +"' alt='"+value+"' width='30px' height='30px'/>"
+			});
+
+			$('#images').prepend("<li>"+images+"</li>").find("li:first").hide().fadeIn("slow");
+		}
+  	
+  	$(document).ready(function() {
+
 		$(".roll-dice").click(function() {
 			var path = $(this).attr("data-ajax");
-			alert(path)
-			var images = '';
-			$.getJSON(path, function(data) {
-				
-				var values = data.dice;
-										
-				$.each(values, function(i, value) {
-					images += "<img src='"+ dice_images[value-1].path +"' alt='"+value+"' width='30px' height='30px'/>"
-					});
-				alert(images);
-				$('#images').prepend("<li>"+images+"</li>").find("li:first").hide().fadeIn("slow");
-			});	
+			alert(path);
+			$.getJSON(path, showPix(data));
+			alert(data);
 		});
 	});
 
@@ -45,9 +47,10 @@
 <ul id="images">
     {% for diceroll in dicerolls %}
     	{% if diceroll.room == room %}
-		<li>
-			<p>{{ diceroll.dice_roll }}</p>
-		</li>
+		
+			<script>
+				showPix({{ diceroll.dice_roll|safe }});
+			</script>
 		{% endif %}
     {% endfor %}
 </ul>
