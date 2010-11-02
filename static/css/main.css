@@ -7,3 +7,4 @@ body {background-color: #fff; margin: 2em auto; width: 960px; padding: 1em; bord
 /* Your customizations here */
 #images {list-style-type: none; padding: 0px;}
 #roll-dice{float: left}
+.right {float: right;}
